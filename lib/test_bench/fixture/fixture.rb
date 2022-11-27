@@ -11,6 +11,10 @@ module TestBench
       Fixture.comment(test_session.telemetry, Commented, ...)
     end
 
+    def detail(...)
+      Fixture.comment(test_session.telemetry, Detailed, ...)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
