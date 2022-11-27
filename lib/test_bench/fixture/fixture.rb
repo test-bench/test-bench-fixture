@@ -25,6 +25,16 @@ module TestBench
       test_session.assert(result)
     end
 
+    def refute(result)
+      if not [true, false, nil].include?(result)
+        raise TypeError, "Value #{result.inspect} isn't a boolean"
+      end
+
+      negated_result = !result
+
+      test_session.assert(negated_result)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
