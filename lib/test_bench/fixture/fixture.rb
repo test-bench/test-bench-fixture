@@ -15,6 +15,16 @@ module TestBench
       Fixture.comment(test_session.telemetry, Detailed, ...)
     end
 
+    def assert(result)
+      if not [true, false, nil].include?(result)
+        raise TypeError, "Value #{result.inspect} isn't a boolean"
+      end
+
+      result = false if result.nil?
+
+      test_session.assert(result)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
