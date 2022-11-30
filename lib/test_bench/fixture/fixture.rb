@@ -71,6 +71,33 @@ module TestBench
       assert(false)
     end
 
+    def refute_raises(exception_class=nil, strict: nil, &block)
+      if exception_class.nil?
+        strict ||= false
+        exception_class = StandardError
+      else
+        strict = true if strict.nil?
+      end
+
+      detail "Prohibited exception: #{exception_class}#{' (strict)' if strict}"
+
+      block.()
+
+      detail "(No exception was raised)"
+
+    rescue exception_class => exception
+
+      detail "Raised exception: #{exception.inspect}#{" (subclass of #{exception_class})" if exception.class < exception_class}"
+
+      if strict && !exception.instance_of?(exception_class)
+        raise exception
+      end
+
+      assert(false)
+    else
+      assert(true)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
