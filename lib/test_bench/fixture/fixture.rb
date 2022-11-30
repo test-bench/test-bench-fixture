@@ -35,6 +35,42 @@ module TestBench
       test_session.assert(negated_result)
     end
 
+    def assert_raises(exception_class=nil, message=nil, strict: nil, &block)
+      if exception_class.nil?
+        strict ||= false
+        exception_class = StandardError
+      else
+        strict = true if strict.nil?
+      end
+
+      detail "Expected exception: #{exception_class}#{' (strict)' if strict}"
+      if not message.nil?
+        detail "Expected message: #{message.inspect}"
+      end
+
+      block.()
+
+      detail "(No exception was raised)"
+
+    rescue exception_class => exception
+
+      detail "Raised exception: #{exception.inspect}#{" (subclass of #{exception_class})" if exception.class < exception_class}"
+
+      if strict && !exception.instance_of?(exception_class)
+        raise exception
+      end
+
+      if message.nil?
+        result = true
+      else
+        result = exception.message == message
+      end
+
+      assert(result)
+    else
+      assert(false)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
