@@ -180,6 +180,12 @@ module TestBench
       end
     end
 
+    def self.output(fixture, styling: nil)
+      session = fixture.test_session
+
+      TestBench::Session::Output::Get.(session, styling:)
+    end
+
     def self.call(fixture_class_or_object, ...)
       if fixture_class_or_object.instance_of?(Class)
         fixture_class = fixture_class_or_object
