@@ -3,6 +3,7 @@ require 'test_bench/session/controls'
 require 'test_bench/fixture/controls/random'
 require 'test_bench/fixture/controls/result'
 require 'test_bench/fixture/controls/exception'
+require 'test_bench/fixture/controls/title'
 
 require 'test_bench/fixture/controls/fixture'
 require 'test_bench/fixture/controls/fixture/class'

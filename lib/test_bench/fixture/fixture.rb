@@ -98,6 +98,14 @@ module TestBench
       assert(true)
     end
 
+    def context(title=nil, &block)
+      test_session.context(title, &block)
+    end
+
+    def context!(title=nil, &block)
+      test_session.context!(title, &block)
+    end
+
     def fail(message=nil)
       test_session.fail(message)
     end
