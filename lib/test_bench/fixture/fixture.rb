@@ -106,6 +106,14 @@ module TestBench
       test_session.context!(title, &block)
     end
 
+    def test(title=nil, &block)
+      test_session.test(title, &block)
+    end
+
+    def test!(title=nil, &block)
+      test_session.test!(title, &block)
+    end
+
     def fail(message=nil)
       test_session.fail(message)
     end
