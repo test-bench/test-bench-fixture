@@ -110,6 +110,18 @@ module TestBench
       test_session.context!(title, &block)
     end
 
+    def test(title=nil, &block)
+      title = title&.to_str
+
+      test_session.test(title, &block)
+    end
+
+    def test!(title=nil, &block)
+      title = title&.to_str
+
+      test_session.test!(title, &block)
+    end
+
     def fail!(message=nil)
       test_session.fail(message)
     end
