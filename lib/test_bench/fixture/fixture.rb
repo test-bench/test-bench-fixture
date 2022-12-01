@@ -118,6 +118,12 @@ module TestBench
       test_session.fail(message)
     end
 
+    def fixture(fixture_class_or_object, *, **, &)
+      session = self.test_session
+
+      Fixture.(fixture_class_or_object, *, session:, **, &)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
