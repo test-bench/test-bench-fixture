@@ -98,6 +98,10 @@ module TestBench
       assert(true)
     end
 
+    def fail!(message=nil)
+      test_session.fail(message)
+    end
+
     def self.comment(telemetry, event_class, text, *additional_texts, heading: nil, quote: nil)
       texts = [text, *additional_texts]
 
