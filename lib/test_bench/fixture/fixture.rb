@@ -7,6 +7,11 @@ module TestBench
     end
     attr_writer :test_session
 
+    def fixture_passed?
+      test_session.passed?
+    end
+    alias :passed? :fixture_passed?
+
     def comment(...)
       Fixture.comment(test_session.telemetry, Commented, ...)
     end
