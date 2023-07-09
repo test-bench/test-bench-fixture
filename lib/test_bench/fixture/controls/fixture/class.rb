@@ -30,6 +30,34 @@ module TestBench
               @some_keyword_argument = some_keyword_argument
             end
           end
+
+          class TestBlock
+            include TestBench::Fixture
+
+            attr_reader :test_block
+
+            def initialize(&test_block)
+              @test_block = test_block
+            end
+
+            NoBuildMethod = TestBlock
+
+            class BuildMethod
+              include TestBench::Fixture
+
+              attr_reader :test_block
+
+              def initialize(test_block)
+                @test_block = test_block
+              end
+
+              def self.build(&test_block)
+                new(test_block)
+              end
+            end
+
+            None = Fixture::Class::BuildMethod
+          end
         end
       end
     end
