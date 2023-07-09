@@ -4,6 +4,23 @@ module TestBench
       module Object
         ModuleError = ::Class.new(RuntimeError)
 
+        def self.fixture_modules(object)
+          fixture_modules = []
+
+          targets = included_modules(object)
+
+          targets << object
+
+          targets.select do |target|
+            if fixture_module?(target)
+              fixture_module = fixture_module(target)
+              fixture_modules << fixture_module
+            end
+          end
+
+          fixture_modules
+        end
+
         def self.fixture_module(object)
           if not fixture_module?(object)
             raise ModuleError, "Couldn't resolve a Fixture module -- #{object.inspect}"
