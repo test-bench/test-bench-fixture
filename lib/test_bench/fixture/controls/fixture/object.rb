@@ -9,6 +9,14 @@ module TestBench
             object
           end
 
+          def self.fixture_modules
+            [
+              Modules::Extended::Fixture,
+              Modules::Included::Fixture,
+              Example::Fixture
+            ]
+          end
+
           class Example
             include Modules::Included
             include Modules::NoFixture
