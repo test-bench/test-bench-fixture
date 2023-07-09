@@ -4,6 +4,34 @@ module TestBench
       module Object
         ModuleError = ::Class.new(RuntimeError)
 
+        def self.extend(object, *modules)
+          if modules.empty?
+            fixture_modules = fixture_modules(object)
+          else
+            fixture_modules = modules.map do |mod|
+              assure_included(object, mod)
+
+              fixture_module(mod)
+            end
+          end
+
+          if fixture_modules.empty?
+            raise ModuleError, "No Fixture modules found -- #{object.inspect}"
+          end
+
+          fixture_modules.each do |fixture_module|
+            object.extend(fixture_module)
+          end
+
+          object.extend(Fixture)
+        end
+
+        def self.assure_included(object, mod)
+          if not object.is_a?(mod)
+            raise ModuleError, "Object doesn't include module -- #{mod.inspect}"
+          end
+        end
+
         def self.fixture_modules(object)
           fixture_modules = []
 
