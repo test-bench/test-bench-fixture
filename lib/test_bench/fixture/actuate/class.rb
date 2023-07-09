@@ -4,6 +4,24 @@ module TestBench
       module Class
         Error = ::Class.new(RuntimeError)
 
+        def self.test_block?(fixture_class)
+          assure_fixture(fixture_class)
+
+          constructor = constructor(fixture_class)
+
+          if constructor == :build
+            constructor_method = fixture_class.method(:build)
+          else
+            constructor_method = fixture_class.instance_method(:initialize)
+          end
+
+          constructor_parameters = constructor_method.parameters
+
+          constructor_parameters.any? do |(type, _)|
+            type == :block
+          end
+        end
+
         def self.constructor(fixture_class)
           assure_fixture(fixture_class)
 
