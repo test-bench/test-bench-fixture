@@ -58,6 +58,27 @@ module TestBench
 
             None = Fixture::Class::BuildMethod
           end
+
+          class Actuator
+            include TestBench::Fixture
+
+            attr_accessor :actuated
+            def actuated? = !!actuated
+
+            def call
+              self.actuated = true
+            end
+
+            class TestBlock < Actuator
+              attr_reader :test_block
+
+              def initialize(&test_block)
+                @test_block = test_block
+              end
+            end
+          end
+
+          NoActuator = Example
         end
       end
     end
