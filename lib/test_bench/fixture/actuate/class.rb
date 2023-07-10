@@ -4,6 +4,12 @@ module TestBench
       module Class
         Error = ::Class.new(RuntimeError)
 
+        def self.build_fixture(fixture_class, ...)
+          constructor = constructor(fixture_class)
+
+          fixture_class.public_send(constructor, ...)
+        end
+
         def self.test_block?(fixture_class)
           assure_fixture(fixture_class)
 
