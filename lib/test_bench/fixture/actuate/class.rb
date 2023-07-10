@@ -4,6 +4,22 @@ module TestBench
       module Class
         Error = ::Class.new(RuntimeError)
 
+        def self.call(fixture_class, *, session: nil, **, &block)
+          if test_block?(fixture_class)
+            test_block = block
+          else
+            block_actuator = block
+          end
+
+          fixture = build_fixture(fixture_class, *, **, &test_block)
+
+          Session.configure(fixture, session:, attr_name: :test_session)
+
+          actuate(fixture, &block_actuator)
+
+          fixture
+        end
+
         def self.actuate(fixture, &block_actuator)
           if fixture.respond_to?(:call)
             fixture_actuator = fixture
