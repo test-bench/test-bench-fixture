@@ -4,6 +4,14 @@ module TestBench
       module Object
         ModuleError = ::Class.new(RuntimeError)
 
+        def self.call(object, *modules, session: nil, &block_actuator)
+          extend(object, *modules)
+
+          Session.configure(object, session:, attr_name: :test_session)
+
+          block_actuator.(object)
+        end
+
         def self.extend(object, *modules)
           if modules.empty?
             fixture_modules = fixture_modules(object)
