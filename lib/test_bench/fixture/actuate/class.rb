@@ -4,6 +4,26 @@ module TestBench
       module Class
         Error = ::Class.new(RuntimeError)
 
+        def self.actuate(fixture, &block_actuator)
+          if fixture.respond_to?(:call)
+            fixture_actuator = fixture
+          end
+
+          if block_actuator && fixture_actuator
+            raise Error, "Block argument given to fixture that has an actuator (Fixture Class: #{fixture.class})"
+          end
+
+          if block_actuator.nil? && fixture_actuator.nil?
+            raise Error, "No actuator"
+          end
+
+          if not block_actuator.nil?
+            block_actuator.(fixture)
+          else
+            fixture_actuator.()
+          end
+        end
+
         def self.build_fixture(fixture_class, ...)
           constructor = constructor(fixture_class)
 
