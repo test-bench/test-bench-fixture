@@ -180,6 +180,10 @@ module TestBench
       end
     end
 
+    def self.extend(object, *modules)
+      Actuate::Object.extend(object, *modules)
+    end
+
     def self.output(fixture, styling: nil)
       session = fixture.test_session
 
