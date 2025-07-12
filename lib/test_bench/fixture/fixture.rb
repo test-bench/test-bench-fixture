@@ -194,10 +194,6 @@ module TestBench
       end
     end
 
-    def execute(file_path)
-      test_session.execute(file_path)
-    end
-
     def fixture(fixture_class, *, test_session: nil, **, &)
       test_session ||= self.test_session
 
